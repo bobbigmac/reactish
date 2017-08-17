@@ -18,7 +18,7 @@ The idea goes something like this:
 
 ## Demo
 
-[https://codepen.io/bobbigmac/pen/gxowVy?editors=0010](https://codepen.io/bobbigmac/pen/gxowVy?editors=0010)
+[codepen.io/bobbigmac/pen/gxowVy](https://codepen.io/bobbigmac/pen/gxowVy?editors=0010)
 
 ## Usage
 
@@ -55,4 +55,4 @@ Have been playing with using template literals inside template tags to render su
 
 There's some progress on rendering reactively through template-tag literals too, though can't find a decent way to support modifying the state for objects in subtemplates. See [reactive-literal-templating.html](./reactive-literal-templating.html)
 
-Here's a codepen for the reactive template tag stuff: [https://codepen.io/bobbigmac/pen/YxYBdo?editors=1010]](https://codepen.io/bobbigmac/pen/YxYBdo?editors=1010)
+Here's a codepen for the reactive template tag stuff: [codepen.io/bobbigmac/pen/YxYBdo](https://codepen.io/bobbigmac/pen/YxYBdo?editors=1010)
