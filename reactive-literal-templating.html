@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<title>Reactish Render: Literal Templating</title>
+	</head>
+	<body>
+		<script type="text/javascript" src="./utils.js"></script>
+
+		<div id="root"></div>
+
+		<template name="listitem">
+			<span>Item: ${this.name}</span>
+		</template>
+
+		<template name="layout">
+			<h4 class="${this.className}">${this.title}</h4>
+			<div>${this.counter}</div>
+			<div id="list">List: ${this.list.map(x => render('listitem', x, () => document.getElementById('list'))).join(' ')}</div>
+		</template>
+
+		<script type="text/javascript">
+			//None of this is really a good thing to do.
+			//Think of this as more of a warning than a guide ;)
+
+			//TODO: Has to be a better way to do this than outerHTML
+			HTMLHeadingElement.prototype.toString = function() { return this.outerHTML; }
+			HTMLButtonElement.prototype.toString = function() { return this.outerHTML; }
+			HTMLSpanElement.prototype.toString = function() { return this.outerHTML; }
+			HTMLDivElement.prototype.toString = function() { return this.outerHTML; }
+
+			//Eval code in context, returning array of nodes.
+			var evalLiteralInContext = function(code, data) {
+				code = htmlentities.decode(code);
+				//TODO: Possible to return dom nodes instead of string?
+				//			How to then render them in-place without document.write?
+				const str = (new Function("return `"+code+"`;")).call(data);
+				const doc = (new DOMParser()).parseFromString(str, 'text/html');
+				return Array.from(doc.body.children);
+			};
+
+			//Render reactively
+			var render = function(template, data, parentFunc) {
+				var template = document.querySelector('template[name="'+template+'"]');
+				
+				var nodes = evalLiteralInContext(template.innerHTML, data);
+				var parent = parentFunc && parentFunc();
+				//Only reactive if parent is passed in
+				if(parent) {
+					//TODO: Diff nodes on cached shadowNodes to apply only changes
+					parent.shadowNodes = nodes;
+					// Setup Proxy binding to rerender
+					var reactiveTrap = {
+						set: function(target, key, value) {
+							if(target[key] !== value) {
+								target[key] = value;
+								console.log('want rerendering', target);
+
+								var nodes = evalLiteralInContext(template.innerHTML, target);
+								//Removing all old nodes (atm)
+								Array.from(parent.children).forEach(x => parent.removeChild(x));
+								nodes.map(x => parent.append(x));
+							}
+							return true;
+						}
+					};
+					if(!parent.state) {
+						parent.state = new Proxy(data, reactiveTrap);
+					}
+					nodes.map(x => parent.append(x));
+				}
+				return nodes;
+			};
+
+			let data = {
+				title: 'hello',
+				className: 'myClass',
+				counter: 0,
+				list: [{ name: 'cheese' }, { name: 'sausages' }, { name: 'bacon' }]
+			};
+
+			render('layout', data, () => document.querySelector('#root'));
+
+			window.setInterval(() => document.querySelector('#root').state.counter++, 1000);
+			// window.setInterval(() => data.list[0].name = 'cheese' + document.querySelector('#root').state.counter, 2000);
+		</script>
+	</body>
+</html>
