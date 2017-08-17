@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>Reactish Render</title>
+	</head>
+	<body>
+		<style type="text/css">
+			body {
+				background: linear-gradient(to bottom, #feccb1 0%,#f17432 38%,#e27624 56%,#fb955e 100%);
+			}
+			#title {
+				color: rgba(255, 255, 255, 0.8);
+				margin-top: 0px;
+				font-size: 64px;
+				text-align: center;
+				font-family: courier;
+			}
+		</style>
+		<h1 id="title" class="content"><span>loading</span></h1>
+		<script type="text/javascript" src="./reactish.js"></script>
+		<script type="text/javascript">
+			let data = {
+				title: 'hello',
+				className: 'myClass',
+				counter: 0,
+				list: ['cheese', 'bacon', 'sausages']
+			};
+
+			document.querySelector('.content').reactish(data, function() {
+				return `<div>${this.title}</div>` + 
+				 `<div class="${this.className}">${this.counter}</div>` + 
+				 //TODO: Don't know yet how to render another template for each list member
+				 `<div class="list">${this.list.map(x => `<span>${x}</span>`).join(' ')}</div>`
+			});
+
+			window.setInterval(() => document.querySelector('.content').state.counter++, 1000);
+			//OR fetch('some-url').then(update(state.counter));
+		</script>
+	</body>
+</html>
