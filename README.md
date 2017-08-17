@@ -36,3 +36,7 @@ window.setInterval(() => document.querySelector('.content').state.counter++, 100
 - Maybe rerendering on key, without clearing unchanged contents
 
 Don't know how to do either of these things (yet)
+
+## Problems
+
+Have been playing with using template literals inside template tags to render subtemplates. See [literal-templating.html](./literal-templating.html)

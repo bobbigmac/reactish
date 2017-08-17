@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<title>Reactish Render: Literal Templating</title>
+	</head>
+	<body>
+		<script type="text/javascript" src="./utils.js"></script>
+
+		<template name="listitem">
+			<span>Item: ${this.name}</span>
+		</template>
+
+		<template name="layout">
+			<div class=${this.className}>${this.title}</div>
+			<div>List: ${this.list.map(x => render('listitem', x)).join(' ')}</div>
+		</template>
+
+		<script type="text/javascript">
+			var evalLiteralInContext = function(code, data) {
+				code = htmlentities.decode(code);
+				//TODO: Possible to return dom nodes instead of string?
+				//			How to then render them in-place without document.write?
+				return (new Function("return `"+code+"`;")).call(data);
+			};
+			var render = function(template, data) {
+				var template = document.querySelector('template[name="'+template+'"]');
+				//TODO: Want to setup Proxy binding to rerender
+				return evalLiteralInContext(template.innerHTML, data);
+			};
+
+			let data = {
+				title: 'hello',
+				className: 'myClass',
+				list: [{ name: 'cheese' }, { name: 'sausages' }, { name: 'bacon' }]
+			};
+			document.body.innerHTML = render('layout', data);
+		</script>
+	</body>
+</html>
