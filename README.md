@@ -52,3 +52,5 @@ Don't know how to do either of these things (yet)
 Have been playing with using template literals inside template tags to render subtemplates. See [literal-templating.html](./literal-templating.html)
 
 There's some progress on rendering reactively through template-tag literals too, though can't find a decent way to support modifying the state for objects in subtemplates. See [reactive-literal-templating.html](./reactive-literal-templating.html)
+
+Here's a codepen for the reactive template tag stuff: [https://codepen.io/bobbigmac/pen/YxYBdo?editors=1010]](https://codepen.io/bobbigmac/pen/YxYBdo?editors=1010)
