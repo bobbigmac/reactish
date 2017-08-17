@@ -4,6 +4,10 @@ Reactish is a really short form (~30 lines) of reactive template rendering in ja
 
 It might be ridiculously stupid, it's late. If you think it is, PRs welcome :)
 
+## Demo
+
+[https://codepen.io/bobbigmac/pen/gxowVy?editors=0010](https://codepen.io/bobbigmac/pen/gxowVy?editors=0010)
+
 ## Usage
 
 ```javascript
