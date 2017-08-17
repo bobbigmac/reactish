@@ -1,8 +1,10 @@
 # Reactish
 
-Reactish is a really short form (~30 lines) of reactive template rendering in javascript. Relies on Proxy for basic reactivity.
+Reactish is a really short form [(~30 lines)](./reactish.js) of reactive template rendering in javascript. Relies on Proxy for basic reactivity.
 
 It might be ridiculously stupid, it's late. If you think it is, PRs welcome :)
+
+It's not a complete working solution, but my attempt to replicate the benefits of React/Handlebars/Angular style data-bound rendering, but only using native features in as little code as possible.
 
 ## Goal
 
